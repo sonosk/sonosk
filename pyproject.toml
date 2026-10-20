@@ -1,0 +1,80 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sonosk"
+dynamic = ["version"]
+description = "Medical ultrasound simulation in Python: transducers, fields, B-mode imaging, HIFU heating and thermal dose"
+readme = "README.md"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [{ name = "Soheil Kooklan", email = "soheilkooklan@gmail.com" }]
+keywords = [
+    "ultrasound",
+    "medical ultrasound",
+    "ultrasound simulation",
+    "acoustic field",
+    "transducer",
+    "phased array",
+    "beamforming",
+    "B-mode",
+    "plane wave imaging",
+    "HIFU",
+    "focused ultrasound",
+    "thermal ablation",
+    "bioheat",
+    "thermal dose",
+    "mechanical index",
+    "Rayleigh integral",
+    "angular spectrum",
+    "piezoelectric",
+    "Mason model",
+    "tissue phantom",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Healthcare Industry",
+    "Intended Audience :: Education",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Image Processing",
+]
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.6"]
+test = ["pytest>=7"]
+docs = [
+    "sphinx>=7",
+    "furo",
+    "myst-parser>=2",
+    "sphinx-sitemap>=2.6",
+    "sphinxext-opengraph>=0.9",
+    "matplotlib>=3.6",
+]
+
+[project.urls]
+Homepage = "https://sonosk.github.io/"
+Documentation = "https://sonosk.github.io/sonosk/"
+Source = "https://github.com/sonosk/sonosk"
+Issues = "https://github.com/sonosk/sonosk/issues"
+Changelog = "https://github.com/sonosk/sonosk/blob/main/CHANGELOG.md"
+
+[tool.hatch.version]
+path = "src/sonosk/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests", "examples", "README.md", "CHANGELOG.md", "CITATION.cff", "LICENSE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

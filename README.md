@@ -1,5 +1,9 @@
 # SonoSK
 
+[![PyPI](https://img.shields.io/pypi/v/sonosk)](https://pypi.org/project/sonosk/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23517377.svg)](https://doi.org/10.5281/zenodo.23517377)
+[![tests](https://github.com/sonosk/sonosk/actions/workflows/tests.yml/badge.svg)](https://github.com/sonosk/sonosk/actions/workflows/tests.yml)
+
 SonoSK is a Python library for simulating medical ultrasound. A probe can
 be designed, placed in front of a numerical phantom and used to make a
 B-mode image, or to heat a target and map the temperature, the thermal
@@ -79,9 +83,15 @@ the [examples](https://github.com/sonosk/sonosk/tree/main/examples) folder.
 
 ## Citing
 
-If you use SonoSK in your work, please cite it with the metadata in
+If you use SonoSK in your work, please cite it:
+
+Kooklan S. SonoSK: medical ultrasound simulation in Python.
+Zenodo, 2026. https://doi.org/10.5281/zenodo.23517377
+
+This DOI always points to the latest release. Each release also has its
+own DOI on Zenodo; version 0.1.0 is https://doi.org/10.5281/zenodo.23517378.
+The full metadata is in
 [CITATION.cff](https://github.com/sonosk/sonosk/blob/main/CITATION.cff).
-Each release is archived on Zenodo with its own DOI.
 
 ## Licence
 

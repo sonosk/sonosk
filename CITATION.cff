@@ -9,6 +9,14 @@ authors:
     orcid: "https://orcid.org/0009-0003-5035-7833"
 version: 0.1.0
 date-released: 2026-10-20
+doi: 10.5281/zenodo.23517377
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23517377
+    description: All versions of SonoSK
+  - type: doi
+    value: 10.5281/zenodo.23517378
+    description: SonoSK 0.1.0
 license: GPL-3.0-or-later
 repository-code: "https://github.com/sonosk/sonosk"
 url: "https://sonosk.github.io/sonosk/"

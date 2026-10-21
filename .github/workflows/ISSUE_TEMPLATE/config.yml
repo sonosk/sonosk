@@ -1,8 +1,0 @@
-blank_issues_enabled: false
-contact_links:
-  - name: Questions and ideas
-    url: https://github.com/sonosk/sonosk/discussions
-    about: How to set up a simulation, which model to use, or an idea you want to talk through first.
-  - name: Documentation
-    url: https://sonosk.github.io/sonosk/
-    about: User guide, examples and API reference.

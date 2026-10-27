@@ -9,6 +9,9 @@ updates:
         patterns: ["*"]
   - package-ecosystem: pip
     directory: /
+    # a library keeps its lower bounds; only propose a change when the
+    # newest release falls outside the allowed range
+    versioning-strategy: increase-if-necessary
     schedule:
       interval: monthly
     groups:

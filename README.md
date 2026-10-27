@@ -137,7 +137,8 @@ Kooklan S. SonoSK: medical ultrasound simulation in Python.
 Zenodo, 2026. https://doi.org/10.5281/zenodo.23517377
 
 This DOI always points to the latest release. Each release also has its
-own DOI on Zenodo; version 0.1.0 is https://doi.org/10.5281/zenodo.23517378.
+own DOI on Zenodo; version 0.2.0 is https://doi.org/10.5281/zenodo.23690929
+and version 0.1.0 is https://doi.org/10.5281/zenodo.23517378.
 The full metadata is in
 [CITATION.cff](https://github.com/sonosk/sonosk/blob/main/CITATION.cff).
 

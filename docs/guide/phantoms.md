@@ -27,9 +27,9 @@ gel.attenuation(5e6)     # Np/m at 5 MHz
 soft = gel.with_(alpha0=0.7, name="soft")
 ```
 
-The library does not yet ship tissue values. A database with a published
-source for every number is planned for version 0.2 (see the
-[Roadmap](../roadmap.md)); until then give your own values and fill in
+Measured values for real tissues come from the
+[tissue database](tissues.md), `sonosk.tissues.material("fat")`, where
+every number carries its source. For your own materials, fill in
 `source`.
 
 ## Media
@@ -44,7 +44,10 @@ labels = phantom.layers(g, [2e-3, 8e-3])    # 0 above, 1, 2, then 3 below
 mats = [water, skin, fat, gland]            # one Material per label
 med = sk.Medium(g, labels, mats)
 
-med.c, med.rho, med.alpha0                   # arrays with the grid shape
+med.c, med.rho, med.alpha0                   # arrays with the grid shape (computed on demand)
+med.rho = rho_map                            # replace one map, e.g. to add variations
+sub, sl = med.crop(low, high)                # sub-medium and the slices that cut it
+med2d = med3d.slice2d(y=0.0)                 # x-z plane of a 3-D medium
 med.mask("fat")                              # where the material is fat
 med.volume("gland")                          # area in 2-D, volume in 3-D
 ```
@@ -85,6 +88,25 @@ $10^{\mathrm{echo}/20}$ of its material. `point_targets` adds wires:
 ```python
 wires, wamp = phantom.point_targets([(0, 0, 30e-3), (5e-3, 0, 30e-3)], amplitude=20.0)
 ```
+
+## Interface echoes
+
+```python
+pos_i, amp_i = phantom.interface_scatterers(med, gain=30.0)
+```
+
+In the weak-contrast (Born) limit the reflection of a layered medium is
+the depth derivative of $\tfrac12\ln Z$, so a step from $Z_1$ to $Z_2$
+reflects about $(Z_2-Z_1)/(Z_2+Z_1)$. Each grid point gets a reflector of
+amplitude `gain` times $\tfrac12\Delta\ln Z$ over one grid step in depth,
+with $Z$ smoothed over one grid step to soften the staircase of the label
+map. The reflectors are dense, so their echoes add up into a specular
+echo. `gain` sets the level of these echoes against the diffuse
+scatterers and is a modelling choice: the default 30 was set by eye on
+the breast example (0.1 mm grid, 50 scatterers per mm², 7.5 MHz). The
+speckle grows with the square root of the scatterer density and the
+interface echo with the number of reflectors per unit length, so for
+other settings use `gain = 30 * sqrt(density / 50) * dx / 0.1e-3`.
 
 ## Displaying a phantom
 

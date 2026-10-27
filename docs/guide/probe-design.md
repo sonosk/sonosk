@@ -57,7 +57,20 @@ element.
 :alt: Electrical impedance and pulse-echo response with and without a matching layer
 ```
 
-## Limits of this release
+## From the element to the image
+
+```python
+pulse = imaging.Pulse.from_stack(stack)       # two-way pulse of this element
+rf, fs = imaging.simulate(probe, tx, pos, amp, pulse, medium=medium)
+```
+
+`Pulse.from_stack` drives the stack with a one-cycle burst at the
+half-wave frequency of the plate and applies its transmit response on
+the way out and back. The image then shows the axial resolution that the
+backing and matching layers give, so two element designs can be compared
+on the same phantom.
+
+## Limits
 
 The model is one-dimensional. Lateral modes, kerf coupling between
 elements and the shape of the lens need finite-element models and are not

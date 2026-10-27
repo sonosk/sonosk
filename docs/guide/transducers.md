@@ -65,6 +65,30 @@ the uterus.
 mat = transducer.matrix_array(32, 32, pitch_x=0.3e-3)
 ```
 
+## Phased HIFU arrays on a sphere
+
+```python
+cap = transducer.spherical_array(256, element_radius=3.3e-3, aperture=135.9e-3,
+                                 roc=140e-3)
+cap.focus((10e-3, 0, 140e-3), c=1500.0)      # electronic steering
+```
+
+Circular elements sit on a spherical cap in a sunflower pattern, which
+avoids the grating lobes of a regular layout, each facing the centre of
+curvature. The example numbers are the aperture and radius of curvature of
+a clinical MR-guided system (Kothapalli et al. 2018).
+
+## Moving and cutting a transducer
+
+```python
+src.translate((0, 0, -20e-3))                # move by (x, y, z)
+src.rotate(np.deg2rad(15), axis="y")         # rotate about an axis
+cut = src.subset(np.abs(src.pos[:, 0]) <= 15.5e-3)   # truncated bowl
+```
+
+`subset` keeps the patches where a condition holds, for example the
+truncated bowl of a transrectal HIFU probe.
+
 ## Delays and apodization
 
 Each element has a firing delay and a weight.
@@ -89,3 +113,10 @@ src = transducer.Transducer(pos, normal, area, elem, width=w, height=h, name="mi
 ```
 
 `pos` and `normal` are (N, 3) arrays, `area` and `elem` have length N.
+
+## References
+
+Kothapalli S.V.V.N., Partanen A., Zhu L., et al. A convenient, reliable,
+and fast acoustic pressure field measurement method for magnetic
+resonance-guided high-intensity focused ultrasound systems with phased
+array transducers. J. Ther. Ultrasound 6:5, 2018.

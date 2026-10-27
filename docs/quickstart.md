@@ -113,3 +113,28 @@ print(res.T_max.max(), res.lesion().sum())
 The tissue numbers here are only an example. The
 [Therapy](guide/therapy.md) page explains each step, and the HIFU example
 adds a tumour and the treatment report.
+
+## 6. Real tissue and anatomy
+
+The same steps work on an anatomical phantom with measured tissue values:
+
+```python
+from sonosk import organs, tissues
+
+print(tissues.info("breast carcinoma"))       # values, units and sources
+g = sk.Grid.centered((401, 401), 0.1e-3, depth_start=0.0)
+ph = organs.breast(g, lesions=[organs.Carcinoma((5e-3, 0, 15e-3), radius=3e-3)], rng=1)
+pos, amp = phantom.scatterers(ph.medium, density=50, rng=1)
+probe = transducer.linear_array(128, pitch=0.3e-3, height=4e-3, dx=0.15e-3)
+pulse = imaging.Pulse(7.5e6, 0.65)
+tx = imaging.Transmit.plane(0.0)
+rf, fs = imaging.simulate(probe, tx, pos, amp, pulse, medium=ph.medium)
+x = np.arange(-18e-3, 18e-3, 0.08e-3)
+z = np.arange(1e-3, 39e-3, 0.08e-3)
+img = imaging.beamform(rf, fs, probe, tx, x, z, medium=ph.medium)
+img = imaging.tgc(img, z, 0.75, pulse.f0)
+```
+
+With `medium=` the echoes travel through the speeds and attenuations of
+the tissues, and the beamformer can use the same speed map. See
+[Anatomical phantoms](guide/organs.md) and [Imaging](guide/imaging.md).

@@ -1,7 +1,7 @@
 # Installation
 
-SonoSK needs Python 3.11 or newer. The only required package is NumPy.
-It runs on Windows, Linux and macOS.
+SonoSK needs Python 3.11 or newer. The only required package is NumPy
+(version 2 or newer). It runs on Windows, Linux and macOS.
 
 ## From PyPI
 
@@ -13,6 +13,13 @@ With Matplotlib for the figures and the example scripts:
 
 ```
 pip install "sonosk[plot]"
+```
+
+With SciPy, which makes the full-wave solver about twice as fast through
+its multi-threaded FFT:
+
+```
+pip install "sonosk[plot,fast]"
 ```
 
 Check the installed version:
@@ -67,10 +74,13 @@ pytest
 ## Building this documentation
 
 ```
-pip install -e ".[docs]"
+pip install -e ".[docs,fast]"
+python docs/make_tables.py
 python docs/make_figures.py
 sphinx-build -b html docs docs/_build/html
 ```
 
-Open `docs/_build/html/index.html` in a browser. `make_figures.py` runs
-every example script and takes a few minutes.
+Open `docs/_build/html/index.html` in a browser. `make_tables.py` writes
+the tissue table from `sonosk.tissues`; `make_figures.py` runs every
+example script and takes about half an hour (`python docs/make_figures.py
+breast_bmode` runs one).

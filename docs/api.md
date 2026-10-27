@@ -1,5 +1,11 @@
 # API reference
 
+## sonosk.run_info
+
+```{eval-rst}
+.. autofunction:: sonosk.run_info
+```
+
 ## sonosk.Grid
 
 ```{eval-rst}
@@ -21,11 +27,25 @@
    :members:
 ```
 
+## sonosk.fullwave
+
+```{eval-rst}
+.. automodule:: sonosk.fullwave
+   :members:
+```
+
 ## sonosk.medium
 
 ```{eval-rst}
 .. automodule:: sonosk.medium
    :members:
+```
+
+## sonosk.tissues
+
+```{eval-rst}
+.. automodule:: sonosk.tissues
+   :members: material, info, table, cite, names, groups, properties, provenance, uncertainty, sample, to_csv, pending, reference, perfusion_si
 ```
 
 ## sonosk.phantom
@@ -35,10 +55,24 @@
    :members:
 ```
 
+## sonosk.organs
+
+```{eval-rst}
+.. automodule:: sonosk.organs
+   :members:
+```
+
 ## sonosk.imaging
 
 ```{eval-rst}
 .. automodule:: sonosk.imaging
+   :members:
+```
+
+## sonosk.paths
+
+```{eval-rst}
+.. automodule:: sonosk.paths
    :members:
 ```
 
@@ -67,6 +101,13 @@
 
 ```{eval-rst}
 .. automodule:: sonosk.quality
+   :members:
+```
+
+## sonosk.benchmarks
+
+```{eval-rst}
+.. automodule:: sonosk.benchmarks
    :members:
 ```
 

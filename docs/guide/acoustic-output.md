@@ -74,28 +74,56 @@ assumes the pulse shape does not change with depth.
 mi, z_sp = safety.mechanical_index(z_cm, pr_mpa, f_mhz=3.0, pii=pii_axis)
 ```
 
+## From a simulated transmit
+
+`field.pulsed` gives the pressure waveform of a pulsed transmit at points
+on the beam axis, in water, which is what the measures above expect:
+
+```python
+z = np.linspace(5e-3, 60e-3, 111)
+array.focus((0, 0, 30e-3), c=1480.0)
+t, p = field.pulsed(array, np.stack([0 * z, 0 * z, z], 1), imaging.Pulse(3e6, 0.6),
+                    c=1480.0)
+p = field.scale_to_pressure(p, 1000.0, 1480.0, u0=0.2)          # Pa
+pr = -p.min(axis=1) / 1e6                                       # MPa
+pii = np.array([safety.pulse_intensity_integral(s, t[1] - t[0]) for s in p])
+mi, z_sp = safety.mechanical_index(z * 100, pr, f_mhz=3.0, pii=pii)
+```
+
 ## Limits
 
-`check_limits` uses the Track 3 global maximum values:
+`check_limits` is a screening aid for research, not a regulatory
+determination: the guidance also sets measurement and reporting
+conditions that a simulation does not cover. It uses the Track 3 global
+maximum values of Section 5.2.8 of the FDA guidance (February 2023):
 
 | Application   | ISPTA.3 [mW/cm²] | MI   | ISPPA.3 [W/cm²] | TI  |
 |---------------|------------------|------|-----------------|-----|
 | general       | 720              | 1.9  | 190             |     |
 | ophthalmic    | 50               | 0.23 |                 | 1.0 |
 
-For general use the guidance asks for MI ≤ 1.9 or ISPPA.3 ≤ 190 W/cm², so
-the check passes if either one is within its limit.
+For general use the guidance asks for ISPTA.3 within its limit and
+either MI ≤ 1.9 or ISPPA.3 ≤ 190 W/cm², so either one is enough. It sets
+no TI limit for general use but asks for an explanation of any TI above 6;
+the result then carries a note. For ophthalmic use all three limits apply.
+`r["complete"]` says whether all the values the rules need were given,
+and `r["ok"]` is true only when they were and all are within the limits.
+Negative or non-finite inputs raise an error.
 
 ```python
 r = safety.check_limits(mi=1.2, ispta3=430.0)
-r["ok"]                       # True
+r["ok"], r["complete"]        # True, True
 r["mi"]                       # (1.2, 1.9, True)
-
+safety.check_limits(mi=0.5)["ok"]          # False: ISPTA.3 missing
 safety.check_limits(mi=0.2, ispta3=40.0, ti=0.8, application="ophthalmic")
 ```
 
+The pulse measures take the time along the last axis, so several
+waveforms (one per row) are measured in one call.
+
 The thermal indices (TIS, TIB, TIC) are defined in IEC 62359 and are not in
-this release.
+this release; they will be added once the formulas have been checked
+against the standard itself.
 
 ## References
 

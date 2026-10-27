@@ -17,7 +17,7 @@ extensions = [
 ]
 
 source_suffix = {".rst": "restructuredtext", ".md": "markdown"}
-exclude_patterns = ["_build"]
+exclude_patterns = ["_build", "guide/tissue-table.md"]
 
 myst_enable_extensions = ["dollarmath", "amsmath"]
 myst_heading_anchors = 3
@@ -38,5 +38,5 @@ html_theme_options = {
 
 ogp_site_url = "https://sonosk.github.io/sonosk/"
 ogp_site_name = "SonoSK"
-ogp_image = "https://sonosk.github.io/sonosk/_images/bmode_phantom.png"
+ogp_image = "https://sonosk.github.io/sonosk/_images/breast_bmode.png"
 ogp_description_length = 200

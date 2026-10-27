@@ -1,40 +1,48 @@
 ---
 myst:
   html_meta:
-    "description lang=en": "SonoSK is a Python library for simulating medical ultrasound: transducers and arrays, pressure fields, B-mode imaging of tissue phantoms, HIFU heating, thermal dose and lesion maps, and piezoelectric stack design."
-    "keywords": "ultrasound simulation, Python, transducer, linear array, phased array, beamforming, B-mode, plane wave imaging, HIFU, focused ultrasound, bioheat, thermal dose, mechanical index, Rayleigh integral, angular spectrum, Mason model"
+    "description lang=en": "SonoSK is a Python library for simulating medical ultrasound: transducers and arrays, full-wave and heterogeneous propagation, B-mode imaging of anatomical breast, prostate and uterus phantoms, tissue properties with sources, HIFU treatment planning, thermal dose and lesion maps, and piezoelectric stack design."
+    "keywords": "ultrasound simulation, Python, k-space pseudospectral, full-wave, hybrid angular spectrum, transducer, linear array, convex array, beamforming, sound speed, aberration, B-mode, plane wave imaging, breast phantom, prostate, uterine fibroid, HIFU, focused ultrasound, treatment planning, bioheat, thermal dose, Arrhenius, tissue properties, mechanical index, Mason model"
 ---
 
 # SonoSK
 
 SonoSK is a Python library for simulating medical ultrasound. A probe can
-be designed, placed in front of a numerical phantom and used to make a
-B-mode image, or to heat a target and map the temperature, the thermal
-dose and the lesion that remains. The same transducer, medium and phantom
-objects serve imaging and therapy, in 1, 2 and 3 dimensions.
+be designed, placed on an anatomical phantom of the breast, prostate,
+uterus or face, and used to make a B-mode image, or to heat a target and
+map the temperature, the thermal dose and the lesion that remains. Every
+tissue value comes with its published source. The same transducer, medium
+and phantom objects serve imaging and therapy, in 1, 2 and 3 dimensions.
 
-```{image} figures/bmode_phantom.png
-:alt: Phantom label map, simulated B-mode image with a cyst, two lesions and wire targets, and image quality measures
+```{image} figures/breast_bmode.png
+:alt: Breast phantom, its sound speed, and B-mode images beamformed at 1540 m/s and through the speed map
 ```
 
-```{image} figures/hifu_ablation.png
-:alt: Peak temperature around a focused ultrasound exposure with the lesion outline, temperature at the focus and the treatment report
+```{image} figures/fibroid_hifu.png
+:alt: Pressure field through the abdominal wall, peak temperature and lesion over a uterine fibroid, and the treatment report
 ```
 
-## Contents of version 0.1.0
+## Contents of version 0.2.0
 
 | Part | What it does |
 |------|--------------|
-| [Transducers](guide/transducers.md) | piston, focused bowl, annular, linear, phased, convex and endocavity, matrix and cylindrical line-focus sources; focusing, steering, apodization |
-| [Pressure fields](guide/fields.md) | Rayleigh integral in an attenuating medium, angular spectrum method |
-| [Media and phantoms](guide/phantoms.md) | materials, property maps, layers and inclusions, point scatterers |
-| [Imaging](guide/imaging.md) | pulse-echo signals, plane, diverging and focused transmits, delay-and-sum, compounding, B-mode |
-| [Therapy](guide/therapy.md) | heat source, Pennes bioheat equation, CEM43 dose, lesion and treatment report |
-| [Probe design](guide/probe-design.md) | Mason model of a piezoelectric element with backing and matching layers |
+| [Transducers](guide/transducers.md) | piston, focused bowl, annular, linear, phased, convex and endocavity, matrix, cylindrical line-focus, spherical HIFU phased arrays; focusing, steering, apodization |
+| [Pressure fields](guide/fields.md) | Rayleigh integral, angular spectrum, hybrid angular spectrum through heterogeneous tissue, pulsed fields |
+| [Full-wave simulation](guide/fullwave.md) | k-space pseudospectral solver: heterogeneous, absorbing and nonlinear media, full-wave imaging, harmonics |
+| [Tissue properties](guide/tissues.md) | acoustic and thermal properties with a reference for every value |
+| [Anatomical phantoms](guide/organs.md) | breast, prostate, uterus and face, with cysts, fibroadenomas, carcinomas, tumours, fibroids and calcifications |
+| [Media and phantoms](guide/phantoms.md) | materials, property maps, shapes, random structure, scatterers |
+| [Imaging](guide/imaging.md) | pulse-echo signals through heterogeneous tissue, frequency-dependent attenuation, compounding, sound-speed-aware beamforming, sector images |
+| [Therapy](guide/therapy.md) | heat sources, bioheat equation, CEM43 and Arrhenius damage, perfusion shutdown, multi-point treatment plans, treatment report |
+| [Probe design](guide/probe-design.md) | Mason model of a piezoelectric element; its pulse used in the imaging model |
 | [Acoustic output](guide/acoustic-output.md) | derating, ISPPA, ISPTA, mechanical index, FDA limits |
 | [Image quality](guide/image-quality.md) | resolution, contrast, CNR, gCNR, speckle SNR |
 
-How each solver was checked is on the [Validation](validation.md) page.
+What the models assume and leave out is on the
+[Scope and limits](limitations.md) page; read it before using a number from
+SonoSK. How each solver was checked is on the [Validation](validation.md)
+page, and the convergence studies and the comparison with k-Wave are on
+the [Benchmarks](benchmarks.md) page.
 What comes next, with the version it is planned for, is on the
 [Roadmap](roadmap.md).
 
@@ -47,8 +55,9 @@ pip install "sonosk[plot]"
 Then follow [Getting started](quickstart.md). Every figure in this guide
 comes from a script in the [Examples](examples.md).
 
-SonoSK is research software. It is not a medical device, and its results
-must not be used for clinical decisions.
+SonoSK is research and teaching software. It is not a medical device, and
+its results must not be used for clinical decisions, for planning the
+treatment of a patient or for regulatory claims.
 
 ```{toctree}
 :hidden:
@@ -59,6 +68,9 @@ quickstart
 guide/grid
 guide/transducers
 guide/fields
+guide/fullwave
+guide/tissues
+guide/organs
 guide/phantoms
 guide/imaging
 guide/therapy
@@ -74,7 +86,9 @@ examples
 :hidden:
 :caption: About
 
+limitations
 validation
+benchmarks
 roadmap
 citing
 changelog

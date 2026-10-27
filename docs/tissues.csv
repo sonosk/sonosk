@@ -1,0 +1,217 @@
+tissue,property,value,unit,reference,provenance,sd,min,max,n,note
+fat,c,1422.0,m/s,li2009,measured,,,,,"breast fat in vivo, ultrasound tomography, 61 women; used for all adipose layers"
+fat,rho,911.0,kg/m^3,itis2025,database average,51.42,812,961,23,"fat, 23 samples"
+fat,alpha0,0.73,dB/(cm MHz^y),nasief2015,measured,,,,,"breast fat in vivo, slope at 7 MHz, 24 women"
+fat,y,1.0,,nasief2015,modelling choice,,,,,linear frequency dependence assumed for the slope
+fat,ba,11.0,,law1985,measured,,,,,fat: B/A around 11
+fat,k,0.211,W/(m K),itis2025,database average,0.02113,0.18,0.2416,8,fat
+fat,cp,2348.0,J/(kg K),itis2025,database average,371.8,1806,2973,6,fat
+fat,perfusion,32.7,mL/(min kg),itis2025,database average,12.86,19.832,63.248,12,fat
+fat,echo,0.0,dB,nasief2015,reference level,,,,,reference level; breast fat is the BI-RADS standard of comparison
+muscle,c,1588.4,m/s,itis2025,database average,21.56,1545,1631,24,"skeletal muscle, mean of 24 values"
+muscle,rho,1090.4,kg/m^3,itis2025,database average,55.14,1041,1178,14,"skeletal muscle, 14 samples"
+muscle,alpha0,0.617,dB/(cm MHz^y),itis2025,database average,,,,,7.11 Np/(m MHz^y)
+muscle,y,1.08,,itis2025,database average,,,,,
+muscle,ba,7.0,,law1985,measured,,,,,muscle: B/A close to 7
+muscle,k,0.495,W/(m K),itis2025,database average,0.04211,0.4225,0.56,8,
+muscle,cp,3421.0,J/(kg K),itis2025,database average,460.2,2624,3799,5,
+muscle,perfusion,36.7,mL/(min kg),itis2025,database average,13.1,18.5367,94.2467,58,resting muscle
+muscle,echo,-6.0,dB,birads,modelling choice,,,,,muscle is hypoechoic to fat
+water,c,1523.7,m/s,marczak1997,measured,,,,,water at 37 C
+water,rho,993.3,kg/m^3,kell1975,measured,,,,,water at 37 C
+water,alpha0,0.0022,dB/(cm MHz^y),itis2025,database average,,,,,0.0253 Np/(m MHz) at 1 MHz
+water,y,2.0,,pinkerton1949,measured,,,,,"viscous absorption grows with f^2; IT'IS lists a linear law, which understates the loss above 1 MHz"
+water,ba,4.96,,itis2025,database average,0,4.96,4.96,1,room temperature
+water,k,0.605,W/(m K),itis2025,database average,0.006364,0.6,0.609,2,
+water,cp,4178.0,J/(kg K),itis2025,database average,0,4178,4178,1,
+water,perfusion,0.0,mL/(min kg),itis2025,database average,0,0,0,1,
+water,echo,-inf,dB,birads,modelling choice,,,,,anechoic
+blood,c,1578.2,m/s,itis2025,database average,11.27,1559.2,1590,9,
+blood,rho,1049.8,kg/m^3,itis2025,database average,19.17,1025,1060,584,584 samples
+blood,alpha0,0.206,dB/(cm MHz^y),itis2025,database average,,,,,2.37 Np/(m MHz^y)
+blood,y,1.05,,itis2025,database average,,,,,
+blood,ba,6.11,,itis2025,database average,0.1315,6,6.3,4,
+blood,k,0.517,W/(m K),itis2025,database average,0.02546,0.488,0.561,7,
+blood,cp,3617.0,J/(kg K),itis2025,database average,301.4,3300,3900,3,
+blood,perfusion,0.0,mL/(min kg),model,modelling choice,,,,,flowing blood in a vessel; heat carried by flow is not a Pennes term
+blood,echo,-30.0,dB,birads,modelling choice,,,,,nearly anechoic at clinical frequencies
+epidermis,c,1645.0,m/s,moran1995,measured,,,,,"excised skin, 20-30 MHz, 24 C"
+epidermis,rho,1109.0,kg/m^3,itis2025,database average,37.53,1100,1125,10,skin
+epidermis,alpha0,0.44,dB/(cm MHz^y),moran1995,fitted,,,,,fit alpha1 f^n over 20-30 MHz
+epidermis,y,1.55,,moran1995,fitted,,,,,fit over 20-30 MHz
+epidermis,ba,7.0,,law1985,generic soft-tissue value,,,,,soft tissue value
+epidermis,k,0.372,W/(m K),itis2025,database average,0.05905,0.322,0.498,8,skin
+epidermis,cp,3391.0,J/(kg K),itis2025,database average,233.3,3150,3662,4,skin
+epidermis,perfusion,0.0,mL/(min kg),model,modelling choice,,,,,the epidermis has no blood vessels
+epidermis,echo,15.0,dB,birads,modelling choice,,,,,bright entry echo
+dermis,c,1595.0,m/s,moran1995,measured,,,,,"excised skin, 20-30 MHz, 24 C"
+dermis,rho,1109.0,kg/m^3,itis2025,database average,37.53,1100,1125,10,skin
+dermis,alpha0,0.264,dB/(cm MHz^y),moran1995,fitted,,,,,fit alpha1 f^n over 20-30 MHz
+dermis,y,1.69,,moran1995,fitted,,,,,fit over 20-30 MHz
+dermis,ba,7.0,,law1985,generic soft-tissue value,,,,,soft tissue value
+dermis,k,0.372,W/(m K),itis2025,database average,0.05905,0.322,0.498,8,skin
+dermis,cp,3391.0,J/(kg K),itis2025,database average,233.3,3150,3662,4,skin
+dermis,perfusion,106.4,mL/(min kg),itis2025,database average,36.73,49,174.606,12,skin
+dermis,echo,10.0,dB,birads,modelling choice,,,,,dermis is hyperechoic to subcutaneous fat
+smas,c,1595.0,m/s,moran1995,inherited,,,,,"excised skin, 20-30 MHz, 24 C; value of dermis"
+smas,rho,1109.0,kg/m^3,itis2025,inherited,37.53,1100,1125,10,skin; value of dermis
+smas,alpha0,0.264,dB/(cm MHz^y),moran1995,inherited,,,,,fit alpha1 f^n over 20-30 MHz; value of dermis
+smas,y,1.69,,moran1995,inherited,,,,,fit over 20-30 MHz; value of dermis
+smas,ba,7.0,,law1985,inherited,,,,,soft tissue value; value of dermis
+smas,k,0.372,W/(m K),itis2025,inherited,0.05905,0.322,0.498,8,skin; value of dermis
+smas,cp,3391.0,J/(kg K),itis2025,inherited,233.3,3150,3662,4,skin; value of dermis
+smas,perfusion,106.4,mL/(min kg),itis2025,inherited,36.73,49,174.606,12,skin; value of dermis
+smas,echo,8.0,dB,birads,modelling choice,,,,,"fibrous layer, echogenic band in the subcutis"
+fibroglandular tissue,c,1487.0,m/s,li2009,measured,,,,,"breast parenchyma in vivo, ultrasound tomography"
+fibroglandular tissue,rho,1020.0,kg/m^3,culjat2010,review compilation,,,,,breast
+fibroglandular tissue,alpha0,0.75,dB/(cm MHz^y),culjat2010,review compilation,,,,,"breast; whole breasts in vivo range from 0.96 (over 60 years) to 1.27 (under 30) dB/(cm MHz), Katz-Hanani et al. 2014"
+fibroglandular tissue,y,1.0,,culjat2010,review compilation,,,,,slope in dB/(cm MHz)
+fibroglandular tissue,ba,7.0,,law1985,generic soft-tissue value,,,,,soft tissue value
+fibroglandular tissue,k,0.335,W/(m K),itis2025,database average,0.01768,0.322,0.347,2,breast gland
+fibroglandular tissue,cp,2960.0,J/(kg K),itis2025,database average,0,2960,2960,1,breast gland
+fibroglandular tissue,perfusion,150.0,mL/(min kg),itis2025,database average,0,150,150,1,breast gland
+fibroglandular tissue,echo,10.0,dB,birads,modelling choice,,,,,fibroglandular tissue is hyperechoic to fat
+cooper ligament,c,1595.0,m/s,moran1995,inherited,,,,,"excised skin, 20-30 MHz, 24 C; value of dermis"
+cooper ligament,rho,1109.0,kg/m^3,itis2025,inherited,37.53,1100,1125,10,skin; value of dermis
+cooper ligament,alpha0,0.264,dB/(cm MHz^y),moran1995,inherited,,,,,fit alpha1 f^n over 20-30 MHz; value of dermis
+cooper ligament,y,1.69,,moran1995,inherited,,,,,fit over 20-30 MHz; value of dermis
+cooper ligament,ba,7.0,,law1985,inherited,,,,,soft tissue value; value of dermis
+cooper ligament,k,0.372,W/(m K),itis2025,inherited,0.05905,0.322,0.498,8,skin; value of dermis
+cooper ligament,cp,3391.0,J/(kg K),itis2025,inherited,233.3,3150,3662,4,skin; value of dermis
+cooper ligament,perfusion,106.4,mL/(min kg),itis2025,inherited,36.73,49,174.606,12,skin; value of dermis
+cooper ligament,echo,14.0,dB,birads,modelling choice,,,,,thin echogenic septa
+breast cyst,c,1523.7,m/s,marczak1997,inherited,,,,,water at 37 C; value of water
+breast cyst,rho,993.3,kg/m^3,kell1975,inherited,,,,,water at 37 C; value of water
+breast cyst,alpha0,0.0022,dB/(cm MHz^y),itis2025,inherited,,,,,0.0253 Np/(m MHz) at 1 MHz; value of water
+breast cyst,y,2.0,,pinkerton1949,inherited,,,,,"viscous absorption grows with f^2; IT'IS lists a linear law, which understates the loss above 1 MHz; value of water"
+breast cyst,ba,4.96,,itis2025,inherited,0,4.96,4.96,1,room temperature; value of water
+breast cyst,k,0.605,W/(m K),itis2025,inherited,0.006364,0.6,0.609,2,value of water
+breast cyst,cp,4178.0,J/(kg K),itis2025,inherited,0,4178,4178,1,value of water
+breast cyst,perfusion,0.0,mL/(min kg),itis2025,inherited,0,0,0,1,value of water
+breast cyst,echo,-inf,dB,birads,modelling choice,,,,,simple cyst: anechoic
+fibroadenoma,c,1513.0,m/s,li2009,measured,,,,,"benign breast lesions in vivo, mean of the cohort"
+fibroadenoma,rho,1040.5,kg/m^3,itis2025,database average,49.11,990,1092,8,breast gland
+fibroadenoma,alpha0,0.94,dB/(cm MHz^y),nam2013,measured,,,,,"14 fibroadenomas in vivo, reference phantom method"
+fibroadenoma,y,1.0,,nam2013,measured,,,,,slope in dB/(cm MHz)
+fibroadenoma,ba,7.0,,law1985,generic soft-tissue value,,,,,soft tissue value
+fibroadenoma,k,0.335,W/(m K),itis2025,database average,0.01768,0.322,0.347,2,breast gland
+fibroadenoma,cp,2960.0,J/(kg K),itis2025,database average,0,2960,2960,1,breast gland
+fibroadenoma,perfusion,150.0,mL/(min kg),itis2025,database average,0,150,150,1,breast gland
+fibroadenoma,echo,-3.0,dB,birads,modelling choice,,,,,"oval circumscribed mass, mildly hypoechoic to fat"
+breast carcinoma,c,1548.0,m/s,li2009,measured,,,,,"malignant breast lesions in vivo, mean of the cohort"
+breast carcinoma,rho,1040.5,kg/m^3,itis2025,database average,49.11,990,1092,8,breast gland
+breast carcinoma,alpha0,1.16,dB/(cm MHz^y),nam2013,measured,,,,,"10 carcinomas in vivo, reference phantom method"
+breast carcinoma,y,1.0,,nam2013,measured,,,,,slope in dB/(cm MHz)
+breast carcinoma,ba,7.0,,law1985,generic soft-tissue value,,,,,soft tissue value
+breast carcinoma,k,0.415,W/(m K),valvano1985,measured,,,,,"human breast adenocarcinoma, 37 C"
+breast carcinoma,cp,3750.0,J/(kg K),vaupel2022,measured,,,,,middle of the 3.6-3.9 J/(g K) range of malignant tumours
+breast carcinoma,perfusion,150.0,mL/(min kg),itis2025,database average,0,150,150,1,breast gland
+breast carcinoma,echo,-6.0,dB,birads,modelling choice,,,,,hypoechoic mass; most carcinomas have a lower backscatter than fibroadenomas (Nam et al. 2013)
+prostate,c,1561.0,m/s,suomi2018,used in a simulation study,,,,,from Parker et al. 1993; with rho gives 1.63 MRayl
+prostate,rho,1045.0,kg/m^3,suomi2018,used in a simulation study,,,,,same value in IT'IS
+prostate,alpha0,0.78,dB/(cm MHz^y),suomi2018,used in a simulation study,,,,,value used for prostate tissue in their simulations
+prostate,y,1.1,,suomi2018,used in a simulation study,,,,,exponent used with alpha0
+prostate,ba,7.5,,suomi2018,used in a simulation study,,,,,
+prostate,k,0.51,W/(m K),suomi2018,used in a simulation study,,,,,IT'IS gives 0.512
+prostate,cp,3400.0,J/(kg K),suomi2018,used in a simulation study,,,,,freshly excised prostate (Patch et al. 2011)
+prostate,perfusion,394.1,mL/(min kg),itis2025,database average,0,394.12,394.12,1,normal prostate
+prostate,echo,-6.0,dB,birads,modelling choice,,,,,"peripheral zone: homogeneous, isoechoic, darker than periprostatic fat"
+prostate transition zone,c,1561.0,m/s,suomi2018,inherited,,,,,from Parker et al. 1993; with rho gives 1.63 MRayl; value of prostate
+prostate transition zone,rho,1045.0,kg/m^3,suomi2018,inherited,,,,,same value in IT'IS; value of prostate
+prostate transition zone,alpha0,0.78,dB/(cm MHz^y),suomi2018,inherited,,,,,value used for prostate tissue in their simulations; value of prostate
+prostate transition zone,y,1.1,,suomi2018,inherited,,,,,exponent used with alpha0; value of prostate
+prostate transition zone,ba,7.5,,suomi2018,inherited,,,,,value of prostate
+prostate transition zone,k,0.51,W/(m K),suomi2018,inherited,,,,,IT'IS gives 0.512; value of prostate
+prostate transition zone,cp,3400.0,J/(kg K),suomi2018,inherited,,,,,freshly excised prostate (Patch et al. 2011); value of prostate
+prostate transition zone,perfusion,394.1,mL/(min kg),itis2025,inherited,0,394.12,394.12,1,normal prostate; value of prostate
+prostate transition zone,echo,-9.0,dB,birads,modelling choice,,,,,transition zone: hypoechoic and heterogeneous with age
+prostate carcinoma,c,1561.0,m/s,suomi2018,inherited,,,,,from Parker et al. 1993; with rho gives 1.63 MRayl; value of prostate
+prostate carcinoma,rho,1045.0,kg/m^3,suomi2018,inherited,,,,,same value in IT'IS; value of prostate
+prostate carcinoma,alpha0,0.78,dB/(cm MHz^y),suomi2018,inherited,,,,,value used for prostate tissue in their simulations; value of prostate
+prostate carcinoma,y,1.1,,suomi2018,inherited,,,,,exponent used with alpha0; value of prostate
+prostate carcinoma,ba,7.5,,suomi2018,inherited,,,,,value of prostate
+prostate carcinoma,k,0.51,W/(m K),suomi2018,inherited,,,,,IT'IS gives 0.512; value of prostate
+prostate carcinoma,cp,3400.0,J/(kg K),suomi2018,inherited,,,,,freshly excised prostate (Patch et al. 2011); value of prostate
+prostate carcinoma,perfusion,93.0,mL/(min kg),suomi2018,used in a simulation study,,,,,"1.7 kg/(m^3 s), measured in patients with locally advanced carcinoma (van Vulpen et al. 2002)"
+prostate carcinoma,echo,-14.0,dB,birads,modelling choice,,,,,classically hypoechoic in the peripheral zone
+calcification,c,2184.0,m/s,suomi2018,used in a simulation study,,,,,renal stones (Singh and Agarwal 1989); with rho gives 3.20 MRayl
+calcification,rho,1466.0,kg/m^3,suomi2018,used in a simulation study,,,,,renal stones
+calcification,alpha0,2.64,dB/(cm MHz^y),suomi2018,used in a simulation study,,,,,value used for prostatic calcifications
+calcification,y,1.1,,suomi2018,used in a simulation study,,,,,exponent used with alpha0
+calcification,ba,7.5,,suomi2018,used in a simulation study,,,,,
+calcification,k,3.85,W/(m K),suomi2018,used in a simulation study,,,,,calcium carbonate
+calcification,cp,858.0,J/(kg K),suomi2018,used in a simulation study,,,,,calcium carbonate
+calcification,perfusion,0.0,mL/(min kg),suomi2018,used in a simulation study,,,,,
+calcification,echo,25.0,dB,birads,modelling choice,,,,,bright echo with acoustic shadow
+rectal wall,c,1588.4,m/s,itis2025,inherited,21.56,1545,1631,24,"skeletal muscle, mean of 24 values; value of muscle"
+rectal wall,rho,1090.4,kg/m^3,itis2025,inherited,55.14,1041,1178,14,"skeletal muscle, 14 samples; value of muscle"
+rectal wall,alpha0,0.617,dB/(cm MHz^y),itis2025,inherited,,,,,7.11 Np/(m MHz^y); value of muscle
+rectal wall,y,1.08,,itis2025,inherited,,,,,value of muscle
+rectal wall,ba,7.0,,law1985,inherited,,,,,muscle: B/A close to 7; value of muscle
+rectal wall,k,0.495,W/(m K),itis2025,inherited,0.04211,0.4225,0.56,8,value of muscle
+rectal wall,cp,3421.0,J/(kg K),itis2025,inherited,460.2,2624,3799,5,value of muscle
+rectal wall,perfusion,36.7,mL/(min kg),itis2025,inherited,13.1,18.5367,94.2467,58,resting muscle; value of muscle
+rectal wall,echo,-4.0,dB,birads,modelling choice,,,,,layered muscular wall
+bladder wall,c,1588.4,m/s,itis2025,inherited,21.56,1545,1631,24,"skeletal muscle, mean of 24 values; value of muscle"
+bladder wall,rho,1090.4,kg/m^3,itis2025,inherited,55.14,1041,1178,14,"skeletal muscle, 14 samples; value of muscle"
+bladder wall,alpha0,0.617,dB/(cm MHz^y),itis2025,inherited,,,,,7.11 Np/(m MHz^y); value of muscle
+bladder wall,y,1.08,,itis2025,inherited,,,,,value of muscle
+bladder wall,ba,7.0,,law1985,inherited,,,,,muscle: B/A close to 7; value of muscle
+bladder wall,k,0.495,W/(m K),itis2025,inherited,0.04211,0.4225,0.56,8,value of muscle
+bladder wall,cp,3421.0,J/(kg K),itis2025,inherited,460.2,2624,3799,5,value of muscle
+bladder wall,perfusion,36.7,mL/(min kg),itis2025,inherited,13.1,18.5367,94.2467,58,resting muscle; value of muscle
+bladder wall,echo,2.0,dB,birads,modelling choice,,,,,thin echogenic wall
+urine,c,1523.7,m/s,marczak1997,inherited,,,,,water at 37 C; value of water
+urine,rho,993.3,kg/m^3,kell1975,inherited,,,,,water at 37 C; value of water
+urine,alpha0,0.0022,dB/(cm MHz^y),itis2025,inherited,,,,,0.0253 Np/(m MHz) at 1 MHz; value of water
+urine,y,2.0,,pinkerton1949,inherited,,,,,"viscous absorption grows with f^2; IT'IS lists a linear law, which understates the loss above 1 MHz; value of water"
+urine,ba,4.96,,itis2025,inherited,0,4.96,4.96,1,room temperature; value of water
+urine,k,0.605,W/(m K),itis2025,inherited,0.006364,0.6,0.609,2,value of water
+urine,cp,4178.0,J/(kg K),itis2025,inherited,0,4178,4178,1,value of water
+urine,perfusion,0.0,mL/(min kg),itis2025,inherited,0,0,0,1,value of water
+urine,echo,-inf,dB,birads,modelling choice,,,,,anechoic
+myometrium,c,1613.0,m/s,keshavarzi2001,measured,,,,,"fresh ex vivo, 1-3 MHz: 1611-1616 m/s for myometrium and fibroid"
+myometrium,rho,1104.5,kg/m^3,itis2025,database average,78.71,1052,1157,6,uterus
+myometrium,alpha0,0.316,dB/(cm MHz^y),kiss2011,measured,,,,,power law through the 5 and 10 MHz values of the abstract (4.15 and 12.6 dB/cm)
+myometrium,y,1.6,,kiss2011,fitted,,,,,same fit
+myometrium,ba,7.0,,law1985,generic soft-tissue value,,,,,soft tissue value
+myometrium,k,0.527,W/(m K),itis2025,database average,0.02192,0.511,0.542,2,uterus
+myometrium,cp,3676.0,J/(kg K),itis2025,database average,0,3676,3676,1,uterus
+myometrium,perfusion,457.5,mL/(min kg),itis2025,database average,407.5,170,1055,4,uterus
+myometrium,echo,-4.0,dB,birads,modelling choice,,,,,"homogeneous, intermediate echo level"
+fibroid,c,1613.0,m/s,keshavarzi2001,measured,,,,,"fresh ex vivo, 1-3 MHz"
+fibroid,rho,1104.5,kg/m^3,itis2025,database average,78.71,1052,1157,6,uterus
+fibroid,alpha0,0.357,dB/(cm MHz^y),kiss2011,measured,,,,,leiomyoma: power law through 5.1 and 16.0 dB/cm at 5 and 10 MHz
+fibroid,y,1.65,,kiss2011,fitted,,,,,same fit
+fibroid,ba,7.0,,law1985,generic soft-tissue value,,,,,soft tissue value
+fibroid,k,0.527,W/(m K),itis2025,database average,0.02192,0.511,0.542,2,uterus
+fibroid,cp,3676.0,J/(kg K),itis2025,database average,0,3676,3676,1,uterus
+fibroid,perfusion,100.0,mL/(min kg),model,modelling choice,,,,,"fibroids chosen for HIFU are usually hypovascular, so a value well below that of myometrium; perfusion varies widely between fibroids"
+fibroid,echo,-8.0,dB,birads,modelling choice,,,,,usually hypoechoic whorled mass
+cervix,c,1629.0,m/s,itis2025,database average,5.657,1625,1633,2,cervix
+cervix,rho,1104.5,kg/m^3,itis2025,database average,78.71,1052,1157,6,cervix
+cervix,alpha0,0.218,dB/(cm MHz^y),kiss2011,measured,,,,,power law through 6.3 and 26.8 dB/cm at 5 and 10 MHz
+cervix,y,2.09,,kiss2011,fitted,,,,,same fit
+cervix,ba,7.0,,law1985,generic soft-tissue value,,,,,soft tissue value
+cervix,k,0.527,W/(m K),itis2025,database average,0.02192,0.511,0.542,2,cervix
+cervix,cp,3676.0,J/(kg K),itis2025,database average,0,3676,3676,1,cervix
+cervix,perfusion,700.0,mL/(min kg),itis2025,database average,0,700,700,1,cervix
+cervix,echo,-2.0,dB,birads,modelling choice,,,,,intermediate echo level
+endometrium,c,1613.0,m/s,keshavarzi2001,inherited,,,,,"fresh ex vivo, 1-3 MHz: 1611-1616 m/s for myometrium and fibroid; value of myometrium"
+endometrium,rho,1104.5,kg/m^3,itis2025,inherited,78.71,1052,1157,6,uterus; value of myometrium
+endometrium,alpha0,0.316,dB/(cm MHz^y),kiss2011,inherited,,,,,power law through the 5 and 10 MHz values of the abstract (4.15 and 12.6 dB/cm); value of myometrium
+endometrium,y,1.6,,kiss2011,inherited,,,,,same fit; value of myometrium
+endometrium,ba,7.0,,law1985,inherited,,,,,soft tissue value; value of myometrium
+endometrium,k,0.527,W/(m K),itis2025,inherited,0.02192,0.511,0.542,2,uterus; value of myometrium
+endometrium,cp,3676.0,J/(kg K),itis2025,inherited,0,3676,3676,1,uterus; value of myometrium
+endometrium,perfusion,457.5,mL/(min kg),itis2025,inherited,407.5,170,1055,4,uterus; value of myometrium
+endometrium,echo,6.0,dB,birads,modelling choice,,,,,echogenic stripe (secretory phase)
+bone,c,3515.0,m/s,itis2025,database average,420.3,2660,4200,21,"cortical bone, compressional wave"
+bone,rho,1908.0,kg/m^3,itis2025,database average,166,1800,2100,27,"cortical bone, 27 samples"
+bone,alpha0,4.74,dB/(cm MHz^y),itis2025,database average,,,,,"cortical bone, 54.6 Np/(m MHz)"
+bone,y,1.0,,itis2025,database average,,,,,
+bone,ba,7.0,,model,modelling choice,,,,,no measurement; enters only through the nonlinear term
+bone,k,0.32,W/(m K),itis2025,database average,0.03464,0.3,0.36,3,cortical bone
+bone,cp,1313.0,J/(kg K),itis2025,database average,294.7,826,1650,6,cortical bone
+bone,perfusion,10.0,mL/(min kg),itis2025,database average,0,10,10,1,cortical bone
+bone,echo,20.0,dB,birads,modelling choice,,,,,bright surface with shadow

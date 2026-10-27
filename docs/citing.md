@@ -21,6 +21,7 @@ has its own DOI, so that others can reproduce results with the same code:
 
 | Version | DOI |
 |---------|-----|
+| 0.2.0 | [10.5281/zenodo.23690929](https://doi.org/10.5281/zenodo.23690929) |
 | 0.1.0 | [10.5281/zenodo.23517378](https://doi.org/10.5281/zenodo.23517378) |
 
 The "Cite this repository" button on the

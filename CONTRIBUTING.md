@@ -4,6 +4,21 @@ Bug reports and questions are welcome on the issue tracker. Please include
 the SonoSK version, your Python version and a short script that shows the
 problem.
 
+## Working on the code
+
+```
+git clone https://github.com/sonosk/sonosk.git
+cd sonosk
+pip install -e ".[test,plot,docs,fast]"
+pytest                                   # the test suite
+ruff check --select E,F,W --line-length 100 src tests examples benchmarks
+python docs/make_tables.py && sphinx-build -W -b html docs docs/_build/html
+python benchmarks/run_benchmarks.py      # convergence studies, writes JSON
+```
+
+`pytest` also works from a fresh checkout without installing, because the
+test configuration adds `src` to the path.
+
 ## Code
 
 - Units are SI inside the library. Function arguments in clinical units

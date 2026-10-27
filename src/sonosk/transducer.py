@@ -71,7 +71,11 @@ class Transducer:
         """Mean unit normal of each element, (E, 3)."""
         n = np.stack([np.bincount(self.elem, self.area * self.normal[:, i], self.n_elements)
                       for i in range(3)], axis=1)
-        return n / np.linalg.norm(n, axis=1, keepdims=True)
+        size = np.linalg.norm(n, axis=1, keepdims=True)
+        area = np.bincount(self.elem, self.area, self.n_elements)[:, None]
+        if np.any(size <= 1e-9 * area):
+            raise ValueError("an element has no mean normal (its patch normals cancel)")
+        return n / size
 
     def reset(self):
         self.delays = np.zeros(self.n_elements)
@@ -96,6 +100,39 @@ class Transducer:
         n = np.array([np.sin(angle), 0.0, np.cos(angle)])
         s = self.centers @ n
         self.delays = (s - s.min()) / c
+        return self
+
+    def subset(self, keep):
+        """New transducer made of the patches where keep is true, for
+        example a truncated bowl. Elements are renumbered."""
+        keep = np.asarray(keep, bool)
+        old = self.elem[keep]
+        uniq, new = np.unique(old, return_inverse=True)
+        t = Transducer(self.pos[keep], self.normal[keep], self.area[keep], new, self.width,
+                       self.height, self.name)
+        t.delays = self.delays[uniq].copy()
+        t.apod = self.apod[uniq].copy()
+        return t
+
+    def translate(self, offset):
+        """Move the transducer by offset (x, y, z) [m]."""
+        self.pos = self.pos + np.asarray(offset, dtype=float)
+        return self
+
+    def rotate(self, angle, axis="y", center=(0.0, 0.0, 0.0)):
+        """Rotate the transducer by angle [rad] about an axis through center."""
+        c, s = np.cos(angle), np.sin(angle)
+        if axis == "y":
+            r = np.array([[c, 0, s], [0, 1, 0], [-s, 0, c]])
+        elif axis == "x":
+            r = np.array([[1, 0, 0], [0, c, -s], [0, s, c]])
+        elif axis == "z":
+            r = np.array([[c, -s, 0], [s, c, 0], [0, 0, 1]])
+        else:
+            raise ValueError("axis must be x, y or z")
+        c0 = np.asarray(center, dtype=float)
+        self.pos = (self.pos - c0) @ r.T + c0
+        self.normal = self.normal @ r.T
         return self
 
     def weights(self, f):
@@ -300,3 +337,42 @@ def cylindrical(aperture, length, roc, dx=0.1e-3):
     n = np.stack([-np.sin(tt.ravel()), np.zeros(tt.size), np.cos(tt.ravel())], 1)
     a = np.full(tt.size, roc * 2 * tmax / nt * length / ny)
     return Transducer(p, n, a, np.zeros(tt.size, int), aperture, length, "cylindrical")
+
+
+def spherical_array(n, element_radius, aperture, roc, dx=0.25e-3, seed=None):
+    """Phased array of n circular elements on a spherical cap.
+
+    The element centres follow a sunflower (golden-angle) pattern over the
+    cap of given aperture diameter and radius of curvature, which avoids
+    the grating lobes of a regular layout. Each element is a small flat
+    disc of element_radius, tilted to face the centre of curvature at
+    (0, 0, roc). This is the layout of many MR-guided HIFU systems, which
+    steer the focus electronically with focus().
+
+    seed rotates the pattern by a random angle (None for no rotation).
+    """
+    a = aperture / 2
+    if a + element_radius > roc:
+        raise ValueError("aperture too large for the radius of curvature")
+    t_max = np.arcsin((a - element_radius) / roc)
+    # equal-area spacing on the cap: cos(t) uniform between 1 and cos(t_max)
+    k = np.arange(n) + 0.5
+    cos_t = 1 - k / n * (1 - np.cos(t_max))
+    t = np.arccos(cos_t)
+    rot = 0.0 if seed is None else np.random.default_rng(seed).uniform(0, 2 * np.pi)
+    phi = k * np.pi * (3 - np.sqrt(5)) + rot
+    centres = np.stack([roc * np.sin(t) * np.cos(phi), roc * np.sin(t) * np.sin(phi),
+                        roc - roc * np.cos(t)], 1)
+    p, nrm, ar = _rings(0.0, element_radius, None, dx)
+    frames = []
+    for c in centres:
+        nz = (np.array([0.0, 0.0, roc]) - c) / roc
+        ref = np.array([1.0, 0.0, 0.0]) if abs(nz[0]) < 0.9 else np.array([0.0, 1.0, 0.0])
+        ex = np.cross(ref, nz)
+        ex /= np.linalg.norm(ex)
+        ey = np.cross(nz, ex)
+        frames.append(np.stack([ex, ey, nz], 1))
+    t_ = _assemble(centres, frames, (p, nrm, ar), 2 * element_radius, 2 * element_radius,
+                   "spherical array")
+    t_.roc = roc
+    return t_

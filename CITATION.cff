@@ -7,8 +7,8 @@ authors:
     given-names: Soheil
     email: soheilkooklan@gmail.com
     orcid: "https://orcid.org/0009-0003-5035-7833"
-version: 0.1.0
-date-released: 2026-10-20
+version: 0.2.0
+date-released: 2026-10-27
 doi: 10.5281/zenodo.23517377
 identifiers:
   - type: doi
@@ -23,12 +23,16 @@ url: "https://sonosk.github.io/sonosk/"
 abstract: >-
   SonoSK is a Python library for simulating medical ultrasound. It models
   transducers from single elements to linear, phased, convex, matrix and
-  focused arrays, computes continuous-wave pressure fields with the
-  Rayleigh integral and the angular spectrum method, simulates pulse-echo
-  signals and B-mode images of numerical phantoms, solves the Pennes
-  bioheat equation for focused ultrasound exposures with thermal dose and
-  lesion maps, models piezoelectric stacks with the Mason circuit, and
-  reports acoustic output indices and image quality measures.
+  spherical HIFU arrays; computes fields with the Rayleigh integral, the
+  angular spectrum and hybrid angular spectrum methods and a k-space
+  pseudospectral full-wave solver for heterogeneous, absorbing and
+  nonlinear media; provides a tissue property database with the source of
+  every value and anatomical phantoms of the breast, prostate, uterus and
+  face; simulates B-mode images through heterogeneous tissue with
+  sound-speed-aware beamforming; plans focused ultrasound treatments with
+  the Pennes bioheat equation, thermal dose, Arrhenius damage and perfusion
+  shutdown; models piezoelectric stacks with the Mason circuit; and reports
+  acoustic output indices and image quality measures.
 keywords:
   - ultrasound
   - simulation
@@ -40,3 +44,9 @@ keywords:
   - bioheat
   - thermal dose
   - acoustic output
+  - k-space
+  - full-wave
+  - tissue properties
+  - breast
+  - prostate
+  - uterine fibroid

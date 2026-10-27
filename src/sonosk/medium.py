@@ -69,6 +69,11 @@ class Medium:
         Material index of every grid point.
     materials : sequence of Material
         materials[i] is used where labels == i.
+
+    The property maps (medium.c, medium.rho, ...) are computed from the
+    labels when they are read, which keeps large 3-D media light. A map can
+    be replaced by assignment, for example medium.rho = rho_map, to add
+    variations inside a material.
     """
 
     def __init__(self, grid, labels, materials):
@@ -78,11 +83,27 @@ class Medium:
         if labels.min() < 0 or labels.max() >= len(materials):
             raise ValueError("label without a material")
         self.grid = grid
-        self.labels = labels.astype(int)
+        self.labels = labels.astype(np.int32 if len(materials) < 2 ** 31 else int)
         self.materials = list(materials)
-        for name in _FIELDS:
-            table = np.array([getattr(m, name) for m in self.materials], dtype=float)
-            setattr(self, name, table[self.labels])
+        self._maps = {}
+
+    def __getattr__(self, name):
+        if name in _FIELDS:
+            maps = self.__dict__.get("_maps", {})
+            if name in maps:
+                return maps[name]
+            table = np.array([getattr(m, name) for m in self.__dict__["materials"]], dtype=float)
+            return table[self.__dict__["labels"]]
+        raise AttributeError(name)
+
+    def __setattr__(self, name, value):
+        if name in _FIELDS:
+            value = np.asarray(value, dtype=float)
+            if value.shape != self.grid.shape:
+                raise ValueError(f"{name} must have the grid shape")
+            self._maps[name] = value
+        else:
+            object.__setattr__(self, name, value)
 
     @classmethod
     def homogeneous(cls, grid, material):
@@ -113,3 +134,28 @@ class Medium:
         if name is None:
             return self.grid.size * cell
         return float(self.mask(name).sum()) * cell
+
+    def crop(self, low, high):
+        """Sub-medium inside the box low..high, given as one coordinate per
+        grid axis [m]. Returns (medium, slices); slices index the original
+        grid, so array[slices] crops any field to the same region."""
+        sub, sl = self.grid.crop(low, high)
+        out = Medium(sub, self.labels[sl], self.materials)
+        for k, v in self._maps.items():
+            out._maps[k] = v[sl]
+        return out, sl
+
+    def slice2d(self, y=0.0):
+        """The x-z plane of a 3-D medium at elevation y, as a 2-D medium."""
+        from .grid import Grid
+        if self.grid.ndim != 3:
+            raise ValueError("slice2d needs a 3-D medium")
+        j = int(np.clip(np.rint((y - self.grid.origin[1]) / self.grid.spacing[1]), 0,
+                        self.grid.shape[1] - 1))
+        g2 = Grid((self.grid.shape[0], self.grid.shape[2]),
+                  (self.grid.spacing[0], self.grid.spacing[2]),
+                  (self.grid.origin[0], self.grid.origin[2]))
+        out = Medium(g2, self.labels[:, j, :], self.materials)
+        for k, v in self._maps.items():
+            out._maps[k] = v[:, j, :]
+        return out

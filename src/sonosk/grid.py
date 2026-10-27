@@ -73,6 +73,46 @@ class Grid:
         """All grid points as an (N, ndim) array."""
         return np.stack([m.ravel() for m in self.mesh()], axis=1)
 
+    def index(self, point, strict=False):
+        """Nearest grid index of a point given with one coordinate per axis.
+
+        Points outside the grid are moved to the nearest edge; with
+        strict=True they raise ValueError instead.
+        """
+        p = np.asarray(point, dtype=float)
+        if p.shape != (self.ndim,):
+            raise ValueError(f"point must have {self.ndim} coordinates")
+        f = np.rint((p - self.origin) / self.spacing)
+        hi = np.array(self.shape) - 1
+        if strict and (np.any(f < 0) or np.any(f > hi)):
+            raise ValueError("point outside the grid")
+        return tuple(int(i) for i in np.clip(f, 0, hi))
+
+    def crop(self, low, high, strict=False):
+        """Sub-grid covering low..high (one coordinate per axis) [m] and the
+        slices that cut it from this grid.
+
+        A box that reaches outside the grid is cut at the grid edges; with
+        strict=True it raises ValueError instead.
+        """
+        lo = np.asarray(low, dtype=float)
+        hi = np.asarray(high, dtype=float)
+        if lo.shape != (self.ndim,) or hi.shape != (self.ndim,):
+            raise ValueError(f"low and high must have {self.ndim} coordinates")
+        if np.any(hi < lo):
+            raise ValueError("high must not be below low")
+        a = np.floor((lo - self.origin) / self.spacing).astype(int)
+        b = np.ceil((hi - self.origin) / self.spacing).astype(int)
+        top = np.array(self.shape) - 1
+        if strict and (np.any(a < 0) or np.any(b > top)):
+            raise ValueError("box reaches outside the grid")
+        i0 = np.clip(a, 0, top)
+        i1 = np.clip(b, 0, top)
+        sl = tuple(slice(a, b + 1) for a, b in zip(i0, i1))
+        sub = Grid(tuple(b - a + 1 for a, b in zip(i0, i1)), self.spacing,
+                   self.origin + i0 * self.spacing)
+        return sub, sl
+
     def points_per_wavelength(self, c, f):
         """Smallest number of points per wavelength for speed c and frequency f."""
         return float(np.min(c) / f / self.spacing.max())

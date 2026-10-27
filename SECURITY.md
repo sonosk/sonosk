@@ -27,3 +27,13 @@ value at face value. Report it the same way.
 SonoSK is research software. It is not a medical device, and its results
 must not be used for clinical decisions or for the safety assessment of a
 device on the market.
+
+## How releases are made
+
+Releases are built and uploaded to PyPI by the `publish` workflow with
+trusted publishing, so no PyPI token is stored anywhere. The actions used
+by the workflows are pinned to commit hashes and kept up to date by
+Dependabot, and the workflows run with read-only permissions except where
+a job needs more. Each release on PyPI carries the attestation that
+trusted publishing creates. Install from PyPI (`pip install sonosk`) or
+from a tagged release of this repository.

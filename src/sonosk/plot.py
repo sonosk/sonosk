@@ -15,13 +15,21 @@ def _extent(x, z):
     return [x[0] * 1e3, x[-1] * 1e3, z[-1] * 1e3, z[0] * 1e3]
 
 
-def bmode(image, x, z, dynamic_range=60.0, ax=None, title=None):
-    """Log-compressed B-mode image. image is complex or envelope, (len(z), len(x))."""
+def bmode(image, x, z, dynamic_range=60.0, ax=None, title=None, reference=None):
+    """Log-compressed B-mode image. image is complex or envelope, (len(z), len(x)).
+    NaN pixels (outside a sector) are drawn black. reference sets 0 dB
+    (default the largest envelope value)."""
     plt = _plt()
     from .imaging import log_compress
     ax = plt.gca() if ax is None else ax
-    h = ax.imshow(log_compress(image, dynamic_range), cmap="gray", vmin=-dynamic_range,
-                  vmax=0, extent=_extent(x, z), aspect="equal")
+    img = np.asarray(image)
+    if reference is None:
+        reference = np.nanmax(np.abs(img))
+    db = log_compress(np.nan_to_num(img), dynamic_range, reference)
+    db = np.where(np.isnan(np.abs(img)), np.nan, db)
+    ax.set_facecolor("black")
+    h = ax.imshow(db, cmap="gray", vmin=-dynamic_range, vmax=0, extent=_extent(x, z),
+                  aspect="equal")
     ax.set_xlabel("Lateral [mm]")
     ax.set_ylabel("Depth [mm]")
     if title:
@@ -64,22 +72,39 @@ def temperature_map(T, x, z, ax=None, title=None, lesion=None, vmin=37.0, vmax=N
     return h
 
 
-def labels_map(labels, x, z, names=None, ax=None, title=None):
-    """Label map of a 2-D phantom."""
+def labels_map(labels, x, z, names=None, ax=None, title=None, legend=True, fontsize=7):
+    """Label map of a 2-D phantom (up to 20 labels)."""
     plt = _plt()
     ax = plt.gca() if ax is None else ax
     lab = np.asarray(labels).T
-    h = ax.imshow(lab, cmap="tab10", vmin=-0.5, vmax=9.5, extent=_extent(x, z), aspect="equal",
-                  interpolation="nearest")
-    if names:
+    h = ax.imshow(lab, cmap="tab20", vmin=-0.5, vmax=19.5, extent=_extent(x, z),
+                  aspect="equal", interpolation="nearest")
+    if names and legend:
         for i, nm in enumerate(names):
             if np.any(lab == i):
-                ax.plot([], [], "s", color=plt.cm.tab10(i), label=nm)
-        ax.legend(loc="lower right", fontsize=8, framealpha=0.8)
+                ax.plot([], [], "s", color=plt.cm.tab20(i), label=nm)
+        ax.legend(loc="lower right", fontsize=fontsize, framealpha=0.85)
     ax.set_xlabel("x [mm]")
     ax.set_ylabel("z [mm]")
     if title:
         ax.set_title(title)
+    return h
+
+
+def property_map(medium, prop="c", ax=None, title=None, cmap="viridis", label=None):
+    """Map of one property of a 2-D medium (for example the sound speed)."""
+    plt = _plt()
+    ax = plt.gca() if ax is None else ax
+    x, z = medium.grid.axes()
+    v = np.asarray(getattr(medium, prop))
+    h = ax.imshow(v.T, cmap=cmap, extent=_extent(x, z), aspect="equal",
+                  interpolation="nearest")
+    ax.set_xlabel("x [mm]")
+    ax.set_ylabel("z [mm]")
+    if title:
+        ax.set_title(title)
+    if label:
+        plt.colorbar(h, ax=ax, shrink=0.8, label=label)
     return h
 
 

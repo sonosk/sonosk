@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "sonosk"
 dynamic = ["version"]
-description = "Medical ultrasound simulation in Python: transducers, fields, B-mode imaging, HIFU heating and thermal dose"
+description = "Medical ultrasound simulation in Python: transducers, full-wave and heterogeneous fields, tissue properties, anatomical phantoms, B-mode imaging and HIFU treatment planning"
 readme = "README.md"
 license = "GPL-3.0-or-later"
 license-files = ["LICENSE"]
@@ -32,6 +32,15 @@ keywords = [
     "piezoelectric",
     "Mason model",
     "tissue phantom",
+    "k-space",
+    "full-wave",
+    "hybrid angular spectrum",
+    "tissue properties",
+    "breast ultrasound",
+    "prostate",
+    "uterine fibroid",
+    "sound speed",
+    "treatment planning",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -49,10 +58,11 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Physics",
     "Topic :: Scientific/Engineering :: Image Processing",
 ]
-dependencies = ["numpy>=1.24"]
+dependencies = ["numpy>=2.0"]
 
 [project.optional-dependencies]
 plot = ["matplotlib>=3.6"]
+fast = ["scipy>=1.10"]
 test = ["pytest>=7"]
 docs = [
     "sphinx>=7",
@@ -74,7 +84,8 @@ Changelog = "https://github.com/sonosk/sonosk/blob/main/CHANGELOG.md"
 path = "src/sonosk/__init__.py"
 
 [tool.hatch.build.targets.sdist]
-include = ["src", "tests", "examples", "README.md", "CHANGELOG.md", "CITATION.cff", "LICENSE"]
+include = ["src", "tests", "examples", "benchmarks", "docs/make_figures.py", "docs/make_tables.py", "README.md", "CHANGELOG.md", "CITATION.cff", "LICENSE", "SECURITY.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["src"]

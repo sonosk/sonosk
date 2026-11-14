@@ -12,9 +12,12 @@ transducer  single elements, annular, linear, phased, convex, matrix and
 field       CW pressure fields (Rayleigh integral, angular spectrum, hybrid
             angular spectrum for heterogeneous media)
 fullwave    k-space pseudospectral solver: heterogeneous, absorbing,
-            nonlinear media in 1, 2 and 3 dimensions
+            nonlinear media in 1, 2 and 3 dimensions (3-D: one linear,
+            homogeneous case checked outside the tests; heterogeneous,
+            absorbing, nonlinear and pulse-echo 3-D runs not tested)
 medium      materials and property maps
-tissues     tissue property database with a source for every value
+tissues     tissue property database with a reference or modelling note
+            and a provenance kind for every value
 phantom     shapes, label maps, random structure and point scatterers
 organs      anatomical phantoms of the breast, prostate, uterus and face
 imaging     pulse-echo simulation, beamforming and B-mode images

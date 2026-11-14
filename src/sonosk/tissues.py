@@ -1,4 +1,5 @@
-"""Tissue property database with a published source for every value.
+"""Tissue property database: a reference or modelling note and a kind for
+every value.
 
 Each tissue is a set of properties. Every property carries its value, the
 key of the reference it comes from (see REFERENCES) and a short note on

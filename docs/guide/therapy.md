@@ -152,7 +152,9 @@ after = thermal.coagulate(medium_2d, T_max_2d)    # for a B-mode image after tre
 
 The report gives the target volume, the ablated and residual target, the
 damaged volume outside the target and the damaged volume of every
-material. `coagulate` gives heated tissue the higher backscatter and
+material. "Ablated" and "damaged" mean above the lesion threshold of the
+model (thermal dose or Arrhenius damage); these volumes have not been
+compared with measured lesions. `coagulate` gives heated tissue the higher backscatter and
 attenuation measured in human prostate heated to 60 and 65 °C
 (Worthington et al. 2002), so the treated region shows on a simulated
 image. Those samples were held at temperature for 30 min and measured at

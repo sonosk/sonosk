@@ -2,9 +2,11 @@
 
 `sonosk.safety` computes the acoustic output quantities that are reported
 for diagnostic ultrasound systems and compares them with the limits in the
-FDA guidance (February 2023). The definitions follow IEC 62359 and the
-same guidance. Inputs are values measured, or simulated, in water on the
-beam axis.
+FDA guidance (February 2023). The definitions are those of the glossary
+of that guidance; the guidance refers to IEC 62359 for the measurements,
+but the functions have not been checked against the text of the
+standard. Inputs are values measured, or simulated, in water on the beam
+axis.
 
 ## Derating
 
@@ -122,8 +124,8 @@ The pulse measures take the time along the last axis, so several
 waveforms (one per row) are measured in one call.
 
 The thermal indices (TIS, TIB, TIC) are defined in IEC 62359 and are not in
-this release; they will be added once the formulas have been checked
-against the standard itself.
+this release; they will be added once the formulas can be checked
+against the text of the standard.
 
 ## References
 

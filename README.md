@@ -8,8 +8,11 @@ SonoSK is a Python library for simulating medical ultrasound. A probe can
 be designed, placed on an anatomical phantom of the breast, prostate,
 uterus or face, and used to make a B-mode image, or to heat a target and
 map the temperature, the thermal dose and the lesion that remains. Every
-tissue value comes with its published source. The same objects are used
-for imaging and therapy, in 1, 2 and 3 dimensions.
+tissue value records a reference or a modelling note and how it was
+obtained (measured,
+fitted, database average, inherited from a similar tissue, or a
+modelling choice). The same objects are used for imaging and
+therapy, in 1, 2 and 3 dimensions.
 
 Documentation, tutorials and examples: https://sonosk.github.io/sonosk/
 
@@ -18,7 +21,8 @@ assumptions: soft tissue and bone are fluids, the fast imaging model
 follows straight rays, the full-wave solver uses one power-law exponent
 unless asked for one per tissue, 2-D full-wave images treat every
 inclusion as a cylinder, heating uses the attenuation as absorption unless
-told otherwise, and boiling and cavitation are not modelled. Echo levels
+told otherwise, boiling and cavitation are not modelled, and the only
+damage model shipped is a skin model (Henriques). Echo levels
 are modelling choices, and the tissue values differ in how they were
 obtained (`tissues.provenance()`). The
 [Scope and limits](https://sonosk.github.io/sonosk/limitations.html) page
@@ -35,10 +39,15 @@ lists them all.
 - Propagation: Rayleigh integral, angular spectrum, the hybrid angular
   spectrum method through heterogeneous tissue, pulsed fields, and a
   k-space pseudospectral full-wave solver for heterogeneous, absorbing and
-  nonlinear media in 1, 2 and 3 dimensions.
+  nonlinear media in 1, 2 and 3 dimensions. 3-D runs are implemented, but
+  only one linear case in a homogeneous, lossless medium has been checked,
+  outside the test suite; heterogeneous, absorbing, nonlinear and
+  pulse-echo 3-D runs have not been tested.
 - Tissues: a property database (speed of sound, density, attenuation,
-  B/A, thermal properties, perfusion, echo level) with the reference of
-  every value.
+  B/A, thermal properties, perfusion, echo level) with a reference or
+  modelling note and the kind of every value. 23 of the 216 values are
+  classed as direct measurements, 3 of them of water, so 20 are direct
+  measurements of tissue.
 - Anatomical phantoms: breast with cysts, fibroadenomas and spiculated
   carcinomas; prostate seen from the rectum with zones, tumour and
   calcifications; uterus with fibroids behind the abdominal wall and the
@@ -49,20 +58,23 @@ lists them all.
   beamforming, compounding, sector images, full-wave pulse-echo imaging.
 - Therapy: heat sources including harmonics, Pennes bioheat equation,
   CEM43 dose and Arrhenius damage, perfusion shutdown, treatment plans with
-  many sonications or volumetric trajectories, and a report of the ablated
-  and residual target and the damaged healthy tissue.
+  many sonications or volumetric trajectories, and a report of the target
+  and healthy volumes above the lesion threshold. Lesion sizes are model
+  outputs and have not been compared with measured lesions.
 - Probe design: Mason model of a piezoelectric element with backing and
   matching layers, whose pulse goes straight into the imaging model.
 - Acoustic output: derated pressure and intensity, ISPPA, ISPTA, mechanical
-  index, and a screening check against the FDA Track 3 limits.
+  index, with the definitions of the FDA guidance (2023), and a screening
+  check against its Track 3 limits.
 - Image quality: resolution, contrast, CNR, gCNR and speckle SNR.
 
-Each solver is checked against a closed-form result or an independent
-method in the test suite (see the validation page of the documentation).
-Convergence studies and a comparison of the full-wave solver with k-Wave
-on a shared case are on the benchmarks page, with the numbers in
-`benchmarks/*.json`. The plan for the next releases is on the roadmap
-page.
+The test suite compares the solvers with closed-form results; the
+validation page of the documentation lists these checks and the maturity
+of each capability. The 2-D full-wave solver has also been compared with
+k-Wave on one shared case. No part of SonoSK has been compared with
+measurements yet. Convergence studies and the comparison with k-Wave are
+on the benchmarks page, with the numbers in `benchmarks/*.json`. The plan
+for the next releases is on the roadmap page.
 
 ## Installation
 

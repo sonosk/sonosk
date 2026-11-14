@@ -1,9 +1,49 @@
 # Validation
 
-Every solver in SonoSK is compared with a closed-form result or with an
-independent method. These comparisons are part of the test suite in the
-`tests` folder (131 tests in version 0.2.0) and run on every change of the
-code, on Linux and Windows.
+The test suite in the `tests` folder (131 tests in version 0.2.0)
+contains analytical checks for several solver paths and runs on every
+change of the code, on Linux and Windows. One shared 2-D full-wave case
+has also been compared with k-Wave. Nothing has been compared with
+measurements. The scope of each check is in the tables below, and the
+maturity table is the reference for what may be claimed about each
+capability.
+
+## Maturity of each capability
+
+A capability is placed at the highest level whose evidence exists:
+
+| Level | Minimum evidence |
+|---|---|
+| implemented | the code exists and runs |
+| unit-tested | tests check its behaviour (shapes, arguments, bookkeeping, simple invariants) but not against an independent result |
+| numerically verified | a test or a documented run compares it with a closed-form or analytic solution, or shows convergence towards one, with a stated tolerance; convergence towards the solver's own finer grid (self-convergence) shows grid convergence only |
+| benchmark-compared | compared with a named independent code or a published benchmark, with the reference version, the matched conditions (geometry, grid, time step, boundaries, source and its normalisation, medium), the error metric and the script recorded; a self-convergence study is not a benchmark |
+| experimentally validated | compared with measurements whose protocol, calibration and uncertainty are documented |
+| clinically validated | compared with clinical outcomes in a documented study |
+
+No capability is experimentally or clinically validated.
+
+| Capability | Level |
+|---|---|
+| Rayleigh integral, angular spectrum, pulsed fields | numerically verified |
+| Hybrid angular spectrum through layers and gradients | numerically verified (transmission at a step, limit in a gradient, Rayleigh integral in water) |
+| Full-wave solver, 1-D: absorption, dispersion, reflection, Fubini harmonics | numerically verified |
+| Full-wave solver, 2-D linear heterogeneous | benchmark-compared: k-Wave (k-wave-python 0.6.2, C++ binary), one shared case, relative L2 and peak error, script `benchmarks/kwave_comparison.py`; no acceptance criterion was set before the run |
+| Full-wave solver, 2-D nonlinear heterogeneous | compared with k-Wave with an unexplained difference of 4 to 6.5 % |
+| Full-wave solver, 3-D | implemented; one linear case in a homogeneous, lossless medium checked outside the test suite (spherical spreading within 0.03 %); heterogeneous, absorbing, nonlinear and pulse-echo 3-D runs not tested |
+| Full-wave pulse-echo imaging | unit-tested |
+| Fast imaging model and beamforming | numerically verified on simple cases |
+| Pennes bioheat equation, CEM43 dose, Arrhenius damage | numerically verified |
+| Treatment plans, lesion and treatment report | unit-tested; lesion sizes are model outputs |
+| Echo and attenuation change of heated tissue | unit-tested (published factors applied) |
+| Mason model of a piezoelectric stack | numerically verified |
+| Pulse duration, PII, ISPPA, MI, derating | unit-tested on test signals; definitions as in the FDA guidance (2023) |
+| FDA Track 3 screening | rules checked against Section 5.2.8 of the guidance |
+| Thermal indices | not implemented |
+| Tissue database | references and provenance unit-tested; values of mixed strength (see Tissue properties) |
+| Anatomical phantoms | unit-tested geometry |
+
+## Checks in the test suite
 
 | Quantity | Reference | Agreement in the tests |
 |----------|-----------|------------------------|
@@ -24,7 +64,7 @@ code, on Linux and Windows.
 | Electrical impedance of an unloaded plate, Mason model | closed form | $10^{-6}$ |
 | Energy balance of a loaded stack | electrical power = acoustic power | $10^{-9}$ |
 | Matching layer | Desilets et al. (1978) formula; wider band than without | |
-| Pulse duration, PII, ISPPA, MI | IEC 62359 and FDA definitions on test signals | exact |
+| Pulse duration, PII, ISPPA, MI | definitions in the glossary of the FDA guidance (2023) on test signals; not checked against the text of IEC 62359 | exact |
 | Water sound speed and density | Marczak (1997), Kell (1975) | published values |
 
 ## Added in 0.2.0
@@ -57,7 +97,7 @@ code, on Linux and Windows.
 | Shift of a heat source | centroid of a Gaussian source | 10 µm |
 | Heated-tissue echo and attenuation | factors of Worthington et al. (2002) | exact |
 | Spherical phased array | steered focus position | 0.2 mm |
-| Tissue database | every value has a reference; uterine power laws through the published points; selected values against their papers | 2 % |
+| Tissue database | every value has a known reference key (a paper, a database or a modelling note); uterine power laws through the published points; selected values against their papers | 2 % |
 | Prostate and calcification | impedances 1.63 and 3.20 MRayl of Suomi et al. (2018) | 0.005 MRayl |
 | IT'IS V5.0 attenuation | conversion from Np/(m MHz$^y$) | 0.2 % |
 | Anatomical phantoms | layer order, lesion areas, prostate volume 20-30 mL, SMAS depth 4-5 mm | |
@@ -100,9 +140,10 @@ The full-wave solver has been compared with k-Wave on a shared 2-D
 heterogeneous case, linear and nonlinear (see [Benchmarks](benchmarks.md)).
 Comparisons of the fast imaging model with Field II or FOCUS, and of the
 beamformers with the published plane-wave imaging challenge data
-(PICMUS), are planned for version 0.3 (see the [Roadmap](roadmap.md)). The
-transcranial benchmark problems of Aubry et al. (2022) need high-contrast
-bone and will follow the elastic model.
+(PICMUS), are planned for version 0.3 (see the [Roadmap](roadmap.md)), and
+so is the set of transcranial benchmark problems of Aubry et al. (2022).
+That set compares compressional (fluid) wave models, so its cases can be
+run with the fluid solver of SonoSK.
 
 ## References
 

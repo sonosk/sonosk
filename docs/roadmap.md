@@ -40,7 +40,7 @@ versions can move as the work goes on.
 | Item | Status |
 |------|--------|
 | Materials, property maps, layers, inclusions, scatterers, wire targets | 0.1.0 |
-| Tissue property database (acoustic and thermal) with a published source for every value | 0.2.0 |
+| Tissue property database (acoustic and thermal) with a reference or modelling note and the kind of every value | 0.2.0 |
 | Provenance of every tissue value; spread of the IT'IS values and random draws for Monte Carlo runs | 0.2.0 |
 | Measured backscatter coefficients in place of modelling-choice echo levels | 0.3 |
 | Tissue database as a separate citable data record (CSV with provenance) | 0.3 |
@@ -94,7 +94,7 @@ versions can move as the work goes on.
 | Item | Status |
 |------|--------|
 | Derating, PII, pulse duration, ISPPA, ISPTA, mechanical index, FDA Track 3 limits | 0.1.0 |
-| Thermal indices TIS, TIB, TIC (IEC 62359), after checking against the standard | 0.3 |
+| Thermal indices TIS, TIB, TIC (IEC 62359), once the text of the standard is available | 0.3 |
 | Safety report for every imaging simulation | 0.3 |
 | Resolution, contrast, CNR, gCNR, speckle SNR | 0.1.0 |
 | Automatic measurement of resolution and contrast on standard phantoms | 0.3 |
@@ -112,11 +112,13 @@ versions can move as the work goes on.
 
 | Item | Status |
 |------|--------|
-| Tests against closed-form results for every solver | 0.1.0 |
+| Tests against closed-form results for the solvers of 0.1.0 | 0.1.0 |
 | User guide, example gallery, API reference | 0.1.0 |
 | Tests of the full-wave solver against Fubini, Kramers-Kronig and reflection theory | 0.2.0 |
 | Convergence studies (full-wave, absorbing layer, hybrid angular spectrum, bioheat) with JSON results | 0.2.0 |
 | Comparison of the full-wave solver with k-Wave on a shared heterogeneous case | 0.2.0 |
+| Tests of the full-wave solver in 3-D (spreading, isotropy, absorption) | 0.2.1 |
+| Full-wave solver against the series solution for a fluid cylinder; ITRUSST fluid benchmarks | 0.3 |
 | Comparison of the fast imaging model with Field II or FOCUS; PICMUS data | 0.3 |
 | Comparison with measured fields and HIFU temperatures | 0.3 |
 | Type hints on the public API and a static type check | 0.3 |

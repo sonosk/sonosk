@@ -14,8 +14,9 @@ regulatory claims about a device.
 - Not a real-time scanner simulator, and the fast imaging model is 2-D in
   heterogeneous tissue.
 - Not a tool for regulatory acoustic output measurements: the output
-  measures are computed from waveforms as defined in the standard, and the
-  limit check is a screening aid.
+  measures follow the definitions of the FDA guidance (2023); they have not
+  been checked against the text of IEC 62359, and the limit check is a
+  screening aid.
 
 ## Assumptions that most affect results
 
@@ -48,7 +49,10 @@ in full-wave images; the 2-D full-wave breast example is an aberration
 study, not a realistic B-mode image. On a shared heterogeneous case the
 solver agrees with k-Wave to 0.2 to 2.6 % in the linear regime and to 4 to
 6.5 % in a strongly nonlinear run, where the cause of the difference is
-still open.
+still open. 3-D runs are implemented, but only one linear case (a point
+source in a homogeneous, lossless medium) has been checked, outside the
+test suite, with spherical spreading within 0.03 %; heterogeneous,
+absorbing, nonlinear and pulse-echo 3-D runs have not been tested.
 
 **Hybrid angular spectrum.** One-way propagation: reflections, scattering
 and nonlinearity are neglected. Through a smooth impedance gradient the
@@ -67,12 +71,18 @@ model shipped is the Henriques-Moritz skin model; for other tissues its
 output is a damage index unless tissue-specific Arrhenius coefficients are
 passed (`arrhenius={material: Arrhenius(...)}`). The change of echo and
 attenuation of heated tissue uses factors measured after 30 min of
-heating, applied by peak temperature.
+heating, applied by peak temperature. Lesion volumes, ablated fractions
+and damaged volumes are outputs of the model and its thresholds
+(CEM43 or Arrhenius damage); none has been compared with a measured
+lesion, and they are not predictions of a treatment result.
 
-**Tissue values.** Every value has a source, but the sources differ in
-kind: direct measurements, power-law fits, database averages,
-values used in simulation studies, generic soft-tissue values, values
-inherited from a similar tissue and modelling choices.
+**Tissue values.** Every value has a recorded reference or modelling
+note and a provenance kind, but not every value comes from a paper or a
+direct measurement, and the strength of the evidence differs. The kinds
+are direct measurements, power-law fits, database averages, values used
+in simulation studies, review compilations, generic soft-tissue values,
+values inherited from a similar tissue, modelling choices and the
+reference level of the echo scale.
 `tissues.provenance()` gives the kind of every value and
 `tissues.uncertainty()` the spread where one is known. Use
 `tissues.sample()` to repeat a run over the spread of the values (see the

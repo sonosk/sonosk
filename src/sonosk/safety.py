@@ -1,11 +1,13 @@
 """Acoustic output quantities and regulatory limits for diagnostic ultrasound.
 
 For research and teaching. The functions compute the quantities defined
-in the standard from simulated or measured waveforms; they do not replace
-the measurements and the review that a regulatory submission needs.
+in the glossary of the FDA guidance from simulated or measured waveforms;
+they have not been checked against the text of IEC 62359, and they do not
+replace the measurements and the review that a regulatory submission
+needs.
 
-Derated (".3") values use the 0.3 dB/(cm MHz) model of IEC 62359 and the
-FDA guidance. Inputs are water values on the beam axis.
+Derated (".3") values use the 0.3 dB/(cm MHz) model of the FDA guidance.
+Inputs are water values on the beam axis.
 
 References
 ----------
@@ -70,7 +72,7 @@ def _crossing(e, t, level):
 
 def pulse_duration(p, dt):
     """Pulse duration [s]: 1.25 times the 10 % to 90 % interval of the
-    running pulse intensity integral (IEC 62359).
+    running pulse intensity integral (FDA guidance, glossary).
 
     The time axis is the last axis of p; for several waveforms the result
     is an array with one value per waveform. A waveform of zeros has a

@@ -76,7 +76,9 @@ A truncated 3 MHz bowl in the rectum treats a peripheral zone tumour point by po
 
 ## Micro-focused ultrasound in facial skin
 
-Lines of thermal coagulation points from 10, 7 and 4 MHz transducers aimed at 1.5, 3.0 and 5.0 mm, with Arrhenius skin damage and the SMAS as the target of the deepest one. The deepest one is aimed 0.5 mm below the 4.5 mm of clinical devices, because the fat above the SMAS heats faster and pulls the coagulation point up.
+Lines of thermal coagulation points from 10, 7 and 4 MHz transducers aimed at 1.5, 3.0 and 5.0 mm, with the Arrhenius skin damage model (applied to every layer, so in fat
+and SMAS it is a damage index) and the SMAS as the target of the deepest
+one. The deepest one is aimed 0.5 mm below the 4.5 mm of clinical devices, because the fat above the SMAS heats faster and pulls the coagulation point up.
 
 ```{image} figures/aesthetic_hifu.png
 :alt: Peak temperature and damaged region for three transducers in a face phantom

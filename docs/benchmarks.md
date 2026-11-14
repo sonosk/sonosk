@@ -1,7 +1,7 @@
 # Benchmarks
 
-The tests on the [Validation](validation.md) page compare each solver with
-a closed-form result. This page adds convergence studies, which show how
+The tests on the [Validation](validation.md) page compare the solvers
+with closed-form results in the cases they cover. This page adds convergence studies, which show how
 the error falls as the grid gets finer, and a comparison of the full-wave
 solver with k-Wave on a shared case. The numbers come from
 `benchmarks/run_benchmarks.py` and `benchmarks/kwave_comparison.py` in the
@@ -15,6 +15,11 @@ before. The studies themselves are in `sonosk.benchmarks`.
 ```
 
 ## Full-wave solver against grid resolution
+
+This is a self-convergence study: each grid is compared with the same
+solver on a finer grid, not with the exact solution. A comparison with
+the series solution for scattering by a fluid cylinder is planned for
+version 0.3.
 
 A plane wave (three-cycle burst at 1 MHz) from a line source meets a
 fluid cylinder of 2 wavelengths radius (1650 m/s, 1150 kg/m³) in water.
@@ -87,7 +92,11 @@ grid; an absorbing background (0.5 dB/(cm MHz^1.5)) with a slow layer
 (1450 m/s) and a fast, dense cylinder (1600 m/s, 1100 kg/m³); a point
 source driven by a 1.5 MHz three-cycle burst. k-Wave runs through
 k-wave-python 0.6.2 with its compiled C++ binary, an implementation
-independent of SonoSK. After a shift of one time step, which comes from
+independent of SonoSK but of the same family of methods (k-space
+pseudospectral), so the comparison checks the implementation more than
+the model. The C++ path of k-wave-python 0.6.2 passes additive pressure
+sources to the binary without the scaling 2 dt / (N c0 dx) that k-Wave
+applies; the script applies it. After a shift of one time step, which comes from
 the different indexing of the source samples, the traces agree as
 follows:
 

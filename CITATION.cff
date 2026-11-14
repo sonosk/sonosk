@@ -29,9 +29,10 @@ abstract: >-
   spherical HIFU arrays; computes fields with the Rayleigh integral, the
   angular spectrum and hybrid angular spectrum methods and a k-space
   pseudospectral full-wave solver for heterogeneous, absorbing and
-  nonlinear media; provides a tissue property database with the source of
-  every value and anatomical phantoms of the breast, prostate, uterus and
-  face; simulates B-mode images through heterogeneous tissue with
+  nonlinear media; provides a tissue property database that gives the
+  reference or modelling note and the kind of every value (measured,
+  fitted, database average, inherited or modelling choice) and anatomical phantoms of the
+  breast, prostate, uterus and face; simulates B-mode images through heterogeneous tissue with
   sound-speed-aware beamforming; plans focused ultrasound treatments with
   the Pennes bioheat equation, thermal dose, Arrhenius damage and perfusion
   shutdown; models piezoelectric stacks with the Mason circuit; and reports

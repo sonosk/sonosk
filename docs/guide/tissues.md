@@ -1,9 +1,10 @@
 # Tissue properties
 
 `sonosk.tissues` is a database of acoustic and thermal properties of the
-tissues used by the anatomical phantoms. Every value carries the paper it
-comes from and a note on how it was measured or derived, so a simulation
-can always be traced back to its inputs.
+tissues used by the anatomical phantoms. Every value carries a reference
+key (a paper, a database or a modelling note), its provenance kind and a
+note on how it was measured or derived, so a simulation can always be
+traced back to its inputs, even where the input is a modelling choice.
 
 ```python
 from sonosk import tissues
@@ -46,7 +47,20 @@ usual B-mode appearance of each tissue.
 
 ## Provenance and spread
 
-A reference per value does not make every value equally strong.
+A reference per value does not make every value equally strong. Of the
+216 values in version 0.2.0, 23 are direct measurements, 3 of them of
+water, so 20 are direct measurements of tissue; 7 are fitted to
+measurements, 59 are averages of the IT'IS database, 16 were used in a
+simulation study, 3 come from a review, 8 are generic soft-tissue
+values, 71 are inherited from a similar tissue, 28 are modelling choices
+(among them 23 of the 24 echo levels) and 1 is the reference level of
+the echo scale. The counts come from
+
+```python
+from collections import Counter
+Counter(k for n in tissues.names() for k in tissues.provenance(n).values())
+```
+
 `tissues.provenance(name)` says how each value was obtained: measured,
 fitted, database average, used in a simulation study, review
 compilation, generic soft-tissue value, inherited from a similar tissue,

@@ -1,5 +1,36 @@
 # Changelog
 
+## Unreleased
+
+Corrections of the documentation after the audit of November 2026. No
+change to the computations.
+
+- The tissue database is described as giving a reference or modelling
+  note and the kind of every value (measured, fitted, database average,
+  inherited or modelling choice), not a published source for every
+  value; the tissue page gives the counts of each kind.
+- The acoustic output functions are described as following the
+  definitions of the FDA guidance (2023); they have not been checked
+  against the text of IEC 62359.
+- The 3-D full-wave solver is described the same way everywhere: 3-D
+  runs are implemented; one linear case in a homogeneous, lossless
+  medium has been checked outside the test suite; heterogeneous,
+  absorbing, nonlinear and pulse-echo 3-D runs have not been tested.
+- The validation page lists the maturity of each capability, with the
+  minimum evidence for each level, and states that nothing has been
+  compared with measurements; only one 2-D full-wave case has been
+  compared with another code.
+- The count of direct measurements in the tissue database says that 3 of
+  the 23 are measurements of water.
+- The convergence study of the full-wave solver is labelled a
+  self-convergence study; the k-Wave comparison notes that both codes are
+  k-space pseudospectral codes and that the script scales the k-Wave
+  source.
+- The statement about the transcranial benchmarks of Aubry et al. (2022)
+  is corrected: they compare fluid models and can be run with SonoSK.
+- Lesion volumes and ablated fractions are described as model outputs;
+  the skin damage model is described as a damage index in other tissues.
+
 ## 0.2.0 (2026-10-27)
 
 Tissues, anatomical phantoms, full-wave and heterogeneous propagation,

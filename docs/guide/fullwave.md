@@ -162,9 +162,13 @@ precision, and the position of a point target in a full-wave image.
 Each time step costs about ten FFTs of the padded grid. A 2-D grid of
 400 by 450 points takes about 15 ms per step in single precision with
 scipy installed, so a 4 MHz pulse-echo transmit through 35 mm of tissue
-takes about half a minute. 3-D grids are possible but large; the hybrid
-angular spectrum method in `sonosk.field` is the fast choice for 3-D
-therapy fields.
+takes about half a minute. 3-D grids are possible but large: a
+96 by 96 by 96 grid with a 20-point layer took about 3.5 min and 850 MB
+for 518 steps on two cores. Only this kind of case (linear, homogeneous,
+lossless) has been checked in 3-D, outside the test suite; heterogeneous,
+absorbing, nonlinear and pulse-echo 3-D runs have not been tested. The
+hybrid angular spectrum
+method in `sonosk.field` is the fast choice for 3-D therapy fields.
 
 ## References
 
